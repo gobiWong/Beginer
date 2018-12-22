@@ -27,7 +27,7 @@
 							</div>
 							<div class="form-group">
 								<label>Name</label>
-								<input type="text" class="form-control" v-model="name" placeholder="">
+								<input type="text" class="form-control" v-model="name" @keyup.enter="add" placeholder="">
 							</div>
 							<button type="button" class="btn btn-default" @click="add()">添加</button>
 							<div class="form-group">
@@ -74,6 +74,8 @@
         {{ sdt | selfTime }}
     </p>
 	<script>
+        //自定义表单input的按键修饰符(可以覆盖Vue提供的按键修饰符，此时按F2键才有效)
+        Vue.config.keyCodes.enter=113
         Vue.filter('dateFormat',function(ctime,pattern=""){
             var dt = new Date(ctime)
             var y = dt.getFullYear()
