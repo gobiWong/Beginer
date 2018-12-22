@@ -32,7 +32,7 @@
 							<button type="button" class="btn btn-default" @click="add()">添加</button>
 							<div class="form-group">
 								<label>搜索名称和关键字:</label>
-								<input type="text" class="form-control" v-model="keyWords" placeholder="保时捷">
+								<input type="text" class="form-control" v-model="keyWords" placeholder="保时劫" v-define  v-color="'blue'">
 							</div>
 						</form>
 
@@ -76,6 +76,35 @@
 	<script>
         //自定义表单input的按键修饰符(可以覆盖Vue提供的按键修饰符，此时按F2键才有效)
         Vue.config.keyCodes.enter=113
+        //自定义指令Vue.directive()全局指令让文本框获取焦点
+        //参数1：指令名称，定义的时候，不需要加v-前缀，调用的时候必须加v-来调用
+        //参数2：是一个对象，为一些指令的相关函数，这些函数在特定阶段，执行相关操作
+
+        Vue.directive('define',{
+           bind:function(el){
+               //指令绑定到元素上的时候，执行bind函数，执行一次，这时元素还没有插入到DOM中，无法操作dom元素，无法调用dom元素focus方法 
+               //el.focus()
+           },
+           inserted(el){
+               //表示元素已插入dom中的时候调用，执行inserted函数【触发1次】
+               //一般绑定和js行为相关的处理函数
+               el.focus()
+           },
+           updated:function(el){
+               //当Vnode节点更新时，执行updated 可触发多次
+           }
+        })
+        Vue.directive('color',{
+            bind:function(el,binding){
+                //一般绑定和css样式相关的函数，主要练习第二个参数的意义
+                //binding.name
+                //binding.express
+                //binding.value
+                el.style.color=binding.value
+
+            }
+
+        })
         Vue.filter('dateFormat',function(ctime,pattern=""){
             var dt = new Date(ctime)
             var y = dt.getFullYear()
